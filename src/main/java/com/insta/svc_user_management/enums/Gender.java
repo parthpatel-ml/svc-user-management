@@ -1,8 +1,8 @@
 package com.insta.svc_user_management.enums;
 
-import com.insta.svc_user_management.base.BaseEnum;
+import com.insta.svc_user_management.base.IBaseEnum;
 
-public enum Gender implements BaseEnum {
+public enum Gender implements IBaseEnum {
     MALE(1, "MALE"),
     FEMALE(2, "FEMALE");
 

@@ -1,4 +1,4 @@
 package com.insta.svc_user_management.base;
 
-public interface BaseService {
+public interface IBaseRepository {
 }

@@ -1,6 +1,6 @@
 package com.insta.svc_user_management.model;
 
-import com.insta.svc_user_management.base.BaseModel;
+import com.insta.svc_user_management.base.IBaseModel;
 import com.insta.svc_user_management.enums.Gender;
 import com.insta.svc_user_management.enums.UserAccountType;
 import com.insta.svc_user_management.enums.UserRole;
@@ -9,7 +9,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class User implements BaseModel {
+public class User implements IBaseModel {
     private Long id;
     private String userName;
     private String firstName;

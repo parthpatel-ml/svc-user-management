@@ -1,11 +1,12 @@
 package com.insta.svc_user_management.service;
 
 import com.insta.svc_user_management.base.IBaseService;
+import com.insta.svc_user_management.model.User;
+
+
 
 public interface IUserService extends IBaseService {
-    void test();
-    void test_1();
-    void test_2();
 
+    public User createUser(User user);
 
 }

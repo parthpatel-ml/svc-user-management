@@ -1,31 +1,32 @@
 package com.insta.svc_user_management.model;
 
 import com.insta.svc_user_management.base.IBaseModel;
-import com.insta.svc_user_management.enums.Gender;
-import com.insta.svc_user_management.enums.UserAccountType;
-import com.insta.svc_user_management.enums.UserRole;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Date;
 
 @Data
+@Entity
+@Table(name = "app_user")
 public class User implements IBaseModel {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String userName;
     private String firstName;
     private String lastName;
     private String number;
-    private Date birthDate;
+    private Date birthDate; // Java Util
     private String password;
     private String bio;
-    private String[] links;
+//    private String[] links;
 
-    private Long profilePicture; // should come from media management service.
+//    private Long profilePicture; // should come from media management service.
 
-    private Gender gender;
-    private UserRole role;
-    private UserAccountType userAccountType;
-
+   /* private GenderEnum genderEnum;
+    private UserRoleEnum role;
+    private UserAccountTypeEnum userAccountTypeEnum;*/
     // Follower / Following count update in real time
 
     /**

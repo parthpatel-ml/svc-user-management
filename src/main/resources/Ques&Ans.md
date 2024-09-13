@@ -28,7 +28,8 @@ https://thorben-janssen.com/hibernate-enum-mappings/#:~:text=By%20default%2C%20H
 | 1.0.10 | Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable                                                                                                       |
 | 1.0.11 | what is the meaning of below log,HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default) |
 | 1.0.12 | @Converter use for? jakarta.persistence.AttributeConverter.                                                                                                                                         |
-| 1.0.13 |                                                                                                                                                                                                     |
+| 1.0.13 | @JoinColumn and mappedBy attribute of @OneToOne annotation is same?                                                                                                                                 |
+| 1.0.14 |                                                                                                                                                                                                     |
 
 ## 1.0.1 @MappedSuperclass
 
@@ -889,4 +890,71 @@ to work with Java 8+ time API in your database interactions.
 - You can control how specific fields or types are saved and retrieved from the database by using the `@Convert`
   annotation or by setting `autoApply = true`.
 
-## 1.0.13 
+## 1.0.13 @JoinColumn and mappedBy attribute of @OneToOne annotation is same?
+
+In Hibernate and JPA, the `@JoinColumn` and `mappedBy` attributes of the `@OneToOne` annotation are **not the same** and
+serve different purposes when defining relationships between entities. Here's a detailed explanation of each:
+
+### 1. **`@JoinColumn` Annotation**
+
+- The `@JoinColumn` annotation is used to specify the **foreign key** column in the table for the owning side of the
+  relationship.
+- In a **`@OneToOne`** relationship, the `@JoinColumn` annotation tells Hibernate which column in the current entity’s
+  table references the primary key of the associated entity.
+
+#### Example:
+
+```java
+
+@Entity
+public class Employee {
+    @Id
+    private Long id;
+
+    @OneToOne
+    @JoinColumn(name = "address_id")  // Specifies the foreign key column
+    private Address address;
+}
+```
+
+In this example, the `Employee` table will have a column `address_id` which refers to the `id` in the `Address`
+table. `@JoinColumn` indicates the **owning side** of the relationship, where the foreign key is stored.
+
+### 2. **`mappedBy` Attribute in `@OneToOne`**
+
+- The `mappedBy` attribute is used to specify the **inverse (non-owning) side** of the relationship.
+- The entity that does not own the foreign key will use `mappedBy` to indicate that the foreign key is maintained by the
+  other side of the relationship.
+- It points to the field or property in the owning entity that maps the relationship.
+
+#### Example:
+
+```java
+
+@Entity
+public class Address {
+    @Id
+    private Long id;
+
+    @OneToOne(mappedBy = "address")  // Non-owning side refers to owning side
+    private Employee employee;
+}
+```
+
+In this example, `mappedBy = "address"` in the `Address` entity refers to the `address` field in the `Employee` entity,
+indicating that the `Employee` entity owns the relationship.
+
+### **Difference Between `@JoinColumn` and `mappedBy`**
+
+- **`@JoinColumn`**: Used on the **owning side** of the relationship to define the foreign key column that will be used
+  to reference the associated entity. It physically stores the foreign key in the database table.
+- **`mappedBy`**: Used on the **inverse side** of the relationship to specify that this entity is **not responsible for
+  maintaining the relationship**. It indicates the relationship is controlled by the other entity, whose field or
+  property is referenced by the `mappedBy` attribute.
+
+### Summary:
+
+- `@JoinColumn` is used to define the foreign key column on the owning side of the relationship.
+- `mappedBy` is used on the non-owning (inverse) side to point to the owning entity and indicate that this side doesn’t
+  control the relationship.
+

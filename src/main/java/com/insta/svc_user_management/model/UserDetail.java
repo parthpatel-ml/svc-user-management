@@ -1,36 +1,49 @@
 package com.insta.svc_user_management.model;
 
 import com.insta.svc_user_management.base.IBaseModel;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
+import java.io.Serial;
 import java.sql.Date;
 
 @Data
-@Entity
+@Entity(name = "user_detail")
 public class UserDetail implements IBaseModel {
+    @Serial
+    private static final long serialVersionUID = 4L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @Column(name = "user_name")
     private String userName;
-
+    @Column(name = "first_name")
     private String firstName;
-
+    @Column(name = "last_name")
     private String lastName;
-
+    @Column(name = "number")
     private String number;
-
+    @Column(name = "birth_date")
     private Date birthDate;
-
+    @Column(name = "password")
     private String password;
-
+    @Column(name = "bio")
     private String bio;
-
+    @Column(name = "links")
     private String[] links;
+
+    @OneToOne()
+    @JoinColumn(name = "gender")
+    private Gender gender;
+
+    @OneToOne()
+    @JoinColumn(name = "user_role")
+    private UserRole userRole;
+
+    @OneToOne()
+    @JoinColumn(name = "user_account_type")
+    private UserAccountType userAccountType;
 
 //    private Long profilePicture; // should come from media management service.
 

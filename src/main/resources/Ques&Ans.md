@@ -27,7 +27,8 @@ https://thorben-janssen.com/hibernate-enum-mappings/#:~:text=By%20default%2C%20H
 | 1.0.9  | I ran the Spring Boot application. got log like this, Starting Application using Java 21.0.2 with PID 27272  What is PID here?                                                                      
 | 1.0.10 | Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable                                                                                                       |
 | 1.0.11 | what is the meaning of below log,HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default) |
-| 1.0.12 |                                                                                                                                                                                                     |
+| 1.0.12 | @Converter use for? jakarta.persistence.AttributeConverter.                                                                                                                                         |
+| 1.0.13 |                                                                                                                                                                                                     |
 
 ## 1.0.1 @MappedSuperclass
 
@@ -765,4 +766,127 @@ The log message is a reminder that you no longer need to explicitly specify the 
 PostgreSQL (or most other modern databases). Hibernate can automatically detect the correct dialect based on the JDBC
 connection, so you can remove the `hibernate.dialect` configuration for PostgreSQL from your application properties.
 
-## 1.0.12 
+## 1.0.12 @Converter use for? jakarta.persistence.AttributeConverter.
+
+The `@Converter` annotation in Java is used in **JPA (Java Persistence API)** to define a custom converter that allows
+you to transform the data between the entity attribute and the database column. It helps in converting Java types that
+are not directly supported by the database into a database-compatible format, and vice versa.
+
+### Key Points of `@Converter`:
+
+- It is part of **JPA 2.1** and later versions.
+- It is typically used to **convert** between an entity field type (in Java) and a corresponding database column type (
+  in SQL).
+- You can use it for **basic types**, **enums**, or **complex objects** that are stored as a single column in the
+  database (e.g., converting a `String` to an `enum` or a `LocalDateTime` to a `Timestamp`).
+
+### How to Use `@Converter`:
+
+#### 1. **Creating a Custom Converter:**
+
+You create a class that implements the `javax.persistence.AttributeConverter<X, Y>` interface, where `X` is the Java
+type and `Y` is the database type.
+
+#### Example:
+
+Converting a **Boolean** to a **String** in the database:
+
+```java
+import javax.persistence.AttributeConverter;
+import javax.persistence.Converter;
+
+@Converter
+public class BooleanToStringConverter implements AttributeConverter<Boolean, String> {
+
+    @Override
+    public String convertToDatabaseColumn(Boolean attribute) {
+        return (attribute != null && attribute) ? "Y" : "N";
+    }
+
+    @Override
+    public Boolean convertToEntityAttribute(String dbData) {
+        return "Y".equals(dbData);
+    }
+}
+```
+
+In this example, the `BooleanToStringConverter` class converts a `Boolean` attribute to `"Y"` or `"N"` when saving to
+the database, and it converts `"Y"` or `"N"` back to `Boolean` when reading from the database.
+
+#### 2. **Using the Converter with an Entity:**
+
+After creating the converter, you can apply it to an entity attribute by using the `@Convert` annotation.
+
+```java
+import javax.persistence.Convert;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
+public class User {
+
+    @Id
+    private Long id;
+
+    @Convert(converter = BooleanToStringConverter.class)
+    private Boolean active;
+
+    // getters and setters
+}
+```
+
+In this `User` entity, the `active` field will be stored as `"Y"` or `"N"` in the database instead of a `Boolean`.
+
+#### 3. **Automatic Application of Converters:**
+
+If you want the converter to be applied automatically to all fields of a certain type across all entities, you can
+set `@Converter(autoApply = true)`:
+
+```java
+
+@Converter(autoApply = true)
+public class BooleanToStringConverter implements AttributeConverter<Boolean, String> {
+    // implementation
+}
+```
+
+With `autoApply = true`, any `Boolean` field in your JPA entities will automatically use this converter without needing
+to specify `@Convert` on each field.
+
+### Why Use `@Converter`?
+
+- **Type Mapping**: To map Java types that are not directly supported by JPA or the database (e.g.,
+  converting `LocalDateTime` to `Timestamp`).
+- **Custom Formatting**: To store complex objects or custom formats in a single database column.
+- **Enum Storage**: You can store enums as `String`, `Integer`, or other formats in the database.
+
+#### Example: Storing `LocalDateTime` in a `Timestamp`:
+
+```java
+
+@Converter(autoApply = true)
+public class LocalDateTimeConverter implements AttributeConverter<LocalDateTime, Timestamp> {
+
+    @Override
+    public Timestamp convertToDatabaseColumn(LocalDateTime locDateTime) {
+        return (locDateTime == null ? null : Timestamp.valueOf(locDateTime));
+    }
+
+    @Override
+    public LocalDateTime convertToEntityAttribute(Timestamp sqlTimestamp) {
+        return (sqlTimestamp == null ? null : sqlTimestamp.toLocalDateTime());
+    }
+}
+```
+
+This converter would automatically handle `LocalDateTime` to `Timestamp` conversions in all entities, making it easier
+to work with Java 8+ time API in your database interactions.
+
+### Conclusion:
+
+- The `@Converter` annotation is used to define a custom attribute converter in JPA.
+- It provides flexibility to map Java types to database-compatible formats.
+- You can control how specific fields or types are saved and retrieved from the database by using the `@Convert`
+  annotation or by setting `autoApply = true`.
+
+## 1.0.13 

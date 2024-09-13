@@ -10,8 +10,8 @@ import lombok.Data;
 import java.sql.Date;
 
 @Data
-@Entity(name = "app_user")
-public class User implements IBaseModel {
+@Entity
+public class UserDetail implements IBaseModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

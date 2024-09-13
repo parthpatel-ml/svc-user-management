@@ -1,6 +1,6 @@
 package com.insta.svc_user_management.service;
 
-import com.insta.svc_user_management.model.User;
+import com.insta.svc_user_management.model.UserDetail;
 import com.insta.svc_user_management.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +11,7 @@ public class UserServiceImpl implements IUserService {
     IUserRepository iUserRepository;
 
     @Override
-    public User createUser(User user) {
-        return iUserRepository.save(user);
+    public UserDetail createUser(UserDetail userDetail) {
+        return iUserRepository.save(userDetail);
     }
 }

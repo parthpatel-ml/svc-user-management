@@ -98,4 +98,8 @@ You fire request with `GOV` value its give same error as above.
 > if two different classes share the same `serialVersionUID`, Java could incorrectly deserialize an object into the
 > wrong class. This could lead to `ClassCastException`, incorrect data, or logical errors in your application.
 
-##     
+## 1.0.4 2024-09-14T14:01:35.399+09:30  INFO 21032 --- [svc-user-management] [  restartedMain] f.a.AutowiredAnnotationBeanPostProcessor : Autowired annotation is not supported on static fields: private static com.insta.svc_user_management.repository.IUserAccountTypeRepository com.insta.svc_user_management.enums.EnumDataLoader.iUserAccountTypeRepository
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'enumDataLoader': Invocation of
+init method failed
+

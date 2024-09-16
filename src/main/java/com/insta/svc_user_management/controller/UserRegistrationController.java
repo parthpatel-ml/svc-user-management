@@ -1,7 +1,7 @@
 package com.insta.svc_user_management.controller;
 
 import com.insta.svc_user_management.base.IBaseController;
-import com.insta.svc_user_management.model.UserDetail;
+import com.insta.svc_user_management.dto.UserDetailDTO;
 import com.insta.svc_user_management.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,7 +26,7 @@ public class UserRegistrationController implements IBaseController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<UserDetail> createUser(@RequestBody UserDetail userDetail) {
-        return new ResponseEntity<>(userService.createUser(userDetail), HttpStatus.CREATED);
+    public ResponseEntity<UserDetailDTO> createUser(@RequestBody UserDetailDTO userDetailDTO) {
+        return new ResponseEntity<>(userService.createUser(userDetailDTO), HttpStatus.CREATED);
     }
 }

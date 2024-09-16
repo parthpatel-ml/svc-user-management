@@ -4,12 +4,14 @@ import com.insta.svc_user_management.base.IBaseModel;
 import com.insta.svc_user_management.enums.UserRoleEnum;
 import com.insta.svc_user_management.enumsconverter.UserRoleConverter;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 
 import java.io.Serial;
 
 @Data
 @Entity(name = "user_role")
+@Builder
 public class UserRole implements IBaseModel {
     @Serial
     private static final long serialVersionUID = 3L;

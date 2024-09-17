@@ -8,8 +8,8 @@ public enum GenderEnum implements IBaseEnum {
     TRANSGENDER(3,"T"),
     OTHER(4,"O");
 
-    private int id;
-    private String code;
+    public int id;
+    public String code;
 
     GenderEnum(int id, String code) {
         this.id = id;

@@ -25,4 +25,6 @@ public class Gender implements IBaseModel {
     @Column(name = "gender")
     private GenderEnum genderEnum;
 
+    @Column(name = "code")
+    private String code;
 }

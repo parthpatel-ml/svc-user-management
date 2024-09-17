@@ -9,8 +9,8 @@ public enum UserAccountTypeEnum implements IBaseEnum {
     GOVERNMENT(4, "GOV"),
     GROUP(5, "GRP");
 
-    int id;
-    String code;
+    public int id;
+    public String code;
 
     UserAccountTypeEnum(int id, String code) {
         this.id = id;

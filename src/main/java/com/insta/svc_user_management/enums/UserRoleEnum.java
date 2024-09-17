@@ -10,8 +10,8 @@ public enum UserRoleEnum implements IBaseEnum {
     OPERATIONAL_ROLE(5,"OR"),
     REPORT_GENERATOR_ROLE(6,"RGR");
 
-    int id;
-    String code;
+    public int id;
+    public String code;
 
     UserRoleEnum(int id, String code) {
         this.id = id;

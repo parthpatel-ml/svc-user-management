@@ -24,4 +24,6 @@ public class UserAccountType implements IBaseModel {
     @Convert(converter = UserAccountTypeConverter.class)
     private UserAccountTypeEnum userAccountTypeEnum;
 
+    @Column(name = "code")
+    private String code;
 }

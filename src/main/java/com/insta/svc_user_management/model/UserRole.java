@@ -23,4 +23,7 @@ public class UserRole implements IBaseModel {
     @Column(name = "user_role")
     @Convert(converter = UserRoleConverter.class)
     private UserRoleEnum userRoleEnum;
+
+    @Column(name = "code")
+    private String code;
 }

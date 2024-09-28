@@ -2,13 +2,19 @@ package com.insta.svc_user_management.model;
 
 import com.insta.svc_user_management.base.IBaseModel;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.sql.Date;
 
 @Data
 @Entity(name = "user_detail")
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserDetail implements IBaseModel {
     @Serial
     private static final long serialVersionUID = 4L;
@@ -33,15 +39,15 @@ public class UserDetail implements IBaseModel {
     @Column(name = "links")
     private String[] links;
 
-    @OneToOne()
+    @ManyToOne()
     @JoinColumn(name = "gender")
     private Gender gender;
 
-    @OneToOne()
+    @ManyToOne()
     @JoinColumn(name = "user_role")
     private UserRole userRole;
 
-    @OneToOne()
+    @ManyToOne()
     @JoinColumn(name = "user_account_type")
     private UserAccountType userAccountType;
 

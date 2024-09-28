@@ -3,9 +3,12 @@ package com.insta.svc_user_management.controller;
 import com.insta.svc_user_management.base.IBaseController;
 import com.insta.svc_user_management.dto.UserDetailDTO;
 import com.insta.svc_user_management.service.IUserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -26,7 +29,7 @@ public class UserRegistrationController implements IBaseController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<UserDetailDTO> createUser(@RequestBody UserDetailDTO userDetailDTO) {
+    public ResponseEntity<UserDetailDTO> createUser(@Valid @RequestBody UserDetailDTO userDetailDTO) {
         return new ResponseEntity<>(userService.createUser(userDetailDTO), HttpStatus.CREATED);
     }
 }

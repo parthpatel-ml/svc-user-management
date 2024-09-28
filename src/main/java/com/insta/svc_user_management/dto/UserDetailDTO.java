@@ -4,9 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.insta.svc_user_management.base.IBaseDTO;
-import com.insta.svc_user_management.model.Gender;
-import com.insta.svc_user_management.model.UserAccountType;
-import com.insta.svc_user_management.model.UserRole;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.io.Serial;
@@ -29,8 +28,10 @@ public class UserDetailDTO implements IBaseDTO {
     private String password;
     private String bio;
     private String[] links;
-    private Gender gender;
-    private UserRole userRole;
-    private UserAccountType userAccountType;
+    private String gender;
+    @NotEmpty
+    @NotNull
+    private String userRole;
+    private String userAccountType;
 
 }

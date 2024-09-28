@@ -4,14 +4,18 @@ import com.insta.svc_user_management.base.IBaseModel;
 import com.insta.svc_user_management.enums.GenderEnum;
 import com.insta.svc_user_management.enumsconverter.GenderEnumConverter;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 
 @Data
 @Entity(name = "gender")
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Gender implements IBaseModel {
 
     @Serial

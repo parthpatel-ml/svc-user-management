@@ -3,14 +3,18 @@ package com.insta.svc_user_management.model;
 import com.insta.svc_user_management.base.IBaseModel;
 import com.insta.svc_user_management.enums.ErrorEnum;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 
 @Data
 @Entity(name = "errors")
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Errors implements IBaseModel {
     @Serial
     private static final long serialVersionUID = 4L;

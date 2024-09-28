@@ -103,3 +103,26 @@ You fire request with `GOV` value its give same error as above.
 org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'enumDataLoader': Invocation of
 init method failed
 
+> 1.0.5 If you use third party dependency in your pom. Example 'ModelMapper'. There is no annotation on top
+> of **public class ModelMapper { } <- inside JAR** class. And if you directly **@Autowired** it in your service or
+> manager class.
+> your application is not run, giving below error
+> **APPLICATION FAILED TO START**
+> **Field modelMapper in com.insta.svc_user_management.manager.UserDetailsManager required a bean of type '
+org.modelmapper.ModelMapper' that could not be found.**
+
+
+> Here you add **findByGender(@Param("gender") String gender)** in repo class, No @query annotation. That's why you got
+> below error, **Optional<Gender> findByGender();** then also you got same error
+> org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name '
+> userRegistrationController': Unsatisfied dependency expressed through field 'userService': Error creating bean with
+> name 'userServiceImpl': Unsatisfied dependency expressed through field 'userDetailsManager': Error creating bean with
+> name 'userDetailsManager': Unsatisfied dependency expressed through field 'iGenderRepository': Error creating bean
+> with name 'IGenderRepository' defined in com.insta.svc_user_management.repository.IGenderRepository defined in
+> @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Could not create query
+> for public abstract java.util.Optional com.insta.svc_user_management.repository.IGenderRepository.findByGender(
+> java.lang.String); Reason: Failed to create query for method public abstract java.util.Optional
+> com.insta.svc_user_management.repository.IGenderRepository.findByGender(java.lang.String); No property 'gender' found
+> for type 'Gender'
+
+

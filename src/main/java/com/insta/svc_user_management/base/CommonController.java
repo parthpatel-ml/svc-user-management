@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/")
-public abstract class AbsBaseController implements IBaseController {
+public class CommonController implements IBaseController {
     @GetMapping
     public ResponseEntity<String> root() {
         return new ResponseEntity<>("dispatcherServlet Up", HttpStatus.OK);
